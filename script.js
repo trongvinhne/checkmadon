@@ -6,7 +6,29 @@ const progress = document.getElementById("progress");
 
 let frames = [];
 
-videoInput.addEventListener("change", () => {
+videoInput.addEventListener("change", async () => {
+
+    const file = videoInput.files[0];
+
+    if (!file) return;
+
+    video.src = URL.createObjectURL(file);
+
+    await new Promise(resolve => {
+        video.onloadedmetadata = resolve;
+    });
+
+    status.textContent =
+        "Đã chọn video\n" +
+        "Thời lượng: " +
+        video.duration.toFixed(1) +
+        " giây";
+
+    progress.value = 0;
+
+    frames = [];
+
+});
     const file = videoInput.files[0];
 
     if (!file) return;
