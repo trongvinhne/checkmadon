@@ -1,108 +1,85 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+const videoInput = document.getElementById("videoInput");
+const video = document.getElementById("video");
+const scanBtn = document.getElementById("scanBtn");
+const status = document.getElementById("status");
+const progress = document.getElementById("progress");
+
+let frames = [];
+
+videoInput.addEventListener("change", () => {
+    const file = videoInput.files[0];
+
+    if (!file) return;
+
+    video.src = URL.createObjectURL(file);
+
+    status.textContent = "Đã chọn video.";
+    progress.value = 0;
+
+    frames = [];
+});
+
+scanBtn.addEventListener("click", async () => {
+
+    if (!video.src) {
+        alert("Hãy chọn video trước.");
+        return;
+    }
+
+    status.textContent = "Đang lấy khung hình...";
+
+    progress.value = 0;
+
+    await extractFrames();
+
+});
+
+async function extractFrames() {
+
+    frames = [];
+
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const duration = video.duration;
+
+    const step = 0.5;
+
+    for (let t = 0; t < duration; t += step) {
+
+        await seekVideo(t);
+
+        ctx.drawImage(video,0,0);
+
+        frames.push(canvas.toDataURL("image/jpeg",0.8));
+
+        progress.value = (t / duration) * 100;
+
+        status.textContent =
+            "Đã lấy " + frames.length + " khung hình";
+
+    }
+
+    progress.value = 100;
+
+    status.textContent =
+        "Hoàn thành.\nTổng khung hình: " + frames.length;
+
+    console.log(frames);
+
 }
 
-body{
-    background:#f3f5f7;
-    padding:20px;
-}
+function seekVideo(time){
 
-.container{
-    max-width:800px;
-    margin:auto;
-    background:#fff;
-    border-radius:14px;
-    padding:20px;
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
-}
+    return new Promise(resolve=>{
 
-h1{
-    text-align:center;
-    margin-bottom:20px;
-}
+        video.currentTime=time;
 
-h2{
-    margin-top:25px;
-    margin-bottom:10px;
-}
+        video.onseeked=()=>resolve();
 
-input[type=file]{
-    width:100%;
-    margin-bottom:15px;
-}
+    });
 
-video{
-    width:100%;
-    border-radius:10px;
-    background:#000;
-    margin-bottom:15px;
-}
-
-button{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    background:#0d6efd;
-    color:#fff;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-    margin-top:10px;
-}
-
-button:disabled{
-    opacity:.5;
-    cursor:not-allowed;
-}
-
-#status{
-    margin-top:15px;
-    font-weight:bold;
-    color:#444;
-    white-space:pre-line;
-}
-
-progress{
-    width:100%;
-    height:20px;
-    margin-top:15px;
-}
-
-textarea{
-    width:100%;
-    resize:vertical;
-    min-height:220px;
-    padding:12px;
-    border:1px solid #ddd;
-    border-radius:10px;
-    font-size:15px;
-}
-
-#qrCanvas{
-    display:block;
-    margin:20px auto;
-    max-width:260px;
-}
-
-.nav{
-    display:flex;
-    gap:10px;
-    align-items:center;
-    justify-content:center;
-    margin-top:15px;
-}
-
-.nav button{
-    width:auto;
-    padding:10px 18px;
-}
-
-#currentIndex{
-    min-width:80px;
-    text-align:center;
-    font-weight:bold;
 }
