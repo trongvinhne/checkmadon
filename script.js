@@ -12,6 +12,8 @@ input.onchange = () => {
 };
 
 button.onclick = async () => {
+status.innerHTML = "Đã bấm nút Quét mã";
+alert("Đã bấm nút Quét mã");
 
     if (!video.src) {
         alert("Hãy chọn video");
