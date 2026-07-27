@@ -1,55 +1,76 @@
-
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Mã Đơn V2</title>
 
-<title>CheckMaDon V2</title>
+    <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet" href="style.css">
-
-<script src="https://unpkg.com/tesseract.js@5/dist/tesseract.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 
 <body>
 
-<h1>📦 CheckMaDon V2</h1>
+<div class="container">
 
-<input
-type="file"
-id="videoInput"
-accept="video/*">
+    <h1>📦 Check Mã Đơn V2</h1>
 
-<br><br>
+    <input
+        type="file"
+        id="videoInput"
+        accept="video/*">
 
-<video
-id="video"
-controls
-playsinline
-width="100%">
-</video>
+    <video
+        id="video"
+        controls
+        playsinline>
+    </video>
 
-<br><br>
+    <button id="scanBtn">
+        Bắt đầu quét
+    </button>
 
-<button id="scanButton">
-🔍 Quét mã
-</button>
+    <div id="status">
+        Chưa chọn video
+    </div>
 
-<p id="status">
-Sẵn sàng...
-</p>
+    <progress
+        id="progress"
+        value="0"
+        max="100">
+    </progress>
 
-<div id="result"></div>
-<h3>Mã tìm được</h3>
+    <h2>Danh sách mã</h2>
 
-<textarea
-id="codes"
-style="width:100%;height:220px;"
-readonly>
-</textarea>
+    <textarea
+        id="result"
+        rows="12"
+        readonly>
+    </textarea>
+
+    <h2>QR</h2>
+
+    <canvas id="qrCanvas"></canvas>
+
+    <div class="nav">
+
+        <button id="prevBtn">
+            ◀ Trước
+        </button>
+
+        <span id="currentIndex">
+            0 / 0
+        </span>
+
+        <button id="nextBtn">
+            Tiếp ▶
+        </button>
+
+    </div>
+
+</div>
 
 <script src="script.js"></script>
 
