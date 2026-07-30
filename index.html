@@ -3,92 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Check Mã Đơn V2</title>
-
+    <title>Check Mã Đơn</title>
     <link rel="stylesheet" href="style.css">
-
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
-
 <body>
+    <div class="app-shell">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">Ứng dụng web</p>
+                <h1>📦 Check Mã Đơn</h1>
+                <p class="subtitle">Tải video, quét mã đơn tự động bằng OCR và QR, sau đó lưu và chia sẻ kết quả ngay trong trình duyệt.</p>
+            </div>
+        </header>
 
-<div class="container">
+        <main class="grid">
+            <section class="card upload-card">
+                <label class="upload-box" for="videoInput">
+                    <span>📹 Chọn video để quét</span>
+                    <input type="file" id="videoInput" accept="video/*">
+                </label>
 
-    <h1>📦 Check Mã Đơn V2</h1>
+                <video id="video" controls playsinline></video>
 
-    <input
-        type="file"
-        id="videoInput"
-        accept="video/*">
+                <div class="toolbar">
+                    <button id="scanBtn">Bắt đầu quét</button>
+                    <button id="clearBtn" class="secondary">Xóa kết quả</button>
+                </div>
 
-    <video
-        id="video"
-        controls
-        playsinline>
-    </video>
+                <div class="status-row">
+                    <div id="status">Chưa chọn video</div>
+                    <div id="supportBadge" class="support-badge">Đang kiểm tra hỗ trợ</div>
+                </div>
 
-    <button id="scanBtn">
-        Bắt đầu quét
-    </button>
+                <progress id="progress" value="0" max="100"></progress>
+            </section>
 
-    <div id="status">
-        Chưa chọn video
+            <section class="card results-card">
+                <div class="section-title">
+                    <h2>Danh sách mã</h2>
+                    <div class="result-actions">
+                        <button id="copyBtn" class="small secondary">Sao chép</button>
+                        <button id="exportBtn" class="small secondary">Xuất txt</button>
+                    </div>
+                </div>
+
+                <div id="resultSummary" class="result-summary">Chưa có mã nào được phát hiện.</div>
+                <div id="resultList" class="result-list"></div>
+
+                <div class="nav">
+                    <button id="prevBtn" class="small secondary">◀ Trước</button>
+                    <span id="currentIndex">0 / 0</span>
+                    <button id="nextBtn" class="small secondary">Tiếp ▶</button>
+                </div>
+
+                <textarea id="result" rows="10" readonly></textarea>
+            </section>
+        </main>
+
+        <section class="card qr-card">
+            <div class="section-title">
+                <h2>QR Preview</h2>
+                <span id="selectedCode" class="selected-code">Chọn một mã để xem chi tiết.</span>
+            </div>
+            <canvas id="qrCanvas"></canvas>
+        </section>
+
+        <section class="card ai-panel">
+            <h2>Trợ lý AI</h2>
+            <div class="api-key-row">
+                <input type="password" id="aiKey" placeholder="OpenAI API key (tùy chọn)" autocomplete="new-password">
+                <button id="saveApiKeyBtn" class="small">Lưu API Key</button>
+            </div>
+            <textarea id="aiPrompt" rows="3" placeholder="Nhập câu hỏi hoặc lệnh cho AI..."></textarea>
+            <button id="askAiBtn">Hỏi AI</button>
+            <div id="aiResponse" class="ai-response">AI sẽ trả lời ở đây. Bạn có thể hỏi về cách dùng ứng dụng hoặc cách tối ưu việc quét video.</div>
+        </section>
     </div>
 
-    <progress
-        id="progress"
-        value="0"
-        max="100">
-    </progress>
-
-    <h2>Danh sách mã</h2>
-
-    <textarea
-        id="result"
-        rows="12"
-        readonly>
-    </textarea>
-
-    <h2>QR</h2>
-
-    <canvas id="qrCanvas"></canvas>
-
-    <div class="nav">
-
-        <button id="prevBtn">
-            ◀ Trước
-        </button>
-
-        <span id="currentIndex">
-            0 / 0
-        </span>
-
-        <button id="nextBtn">
-            Tiếp ▶
-        </button>
-
-    </div>
-
-    <section class="ai-panel">
-        <h2>Trợ lý AI</h2>
-
-        <div class="api-key-row">
-            <input type="password" id="aiKey" placeholder="OpenAI API key (tùy chọn)" autocomplete="new-password">
-            <button id="saveApiKeyBtn">Lưu API Key</button>
-        </div>
-
-        <textarea id="aiPrompt" rows="3" placeholder="Nhập câu hỏi hoặc lệnh cho AI..."></textarea>
-        <button id="askAiBtn">Hỏi AI</button>
-
-        <div id="aiResponse" class="ai-response">
-            AI sẽ trả lời ở đây. Nhập câu hỏi và nhấn "Hỏi AI".
-        </div>
-    </section>
-
-</div>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
