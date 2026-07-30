@@ -34,14 +34,87 @@ background:#0099ff;
 
 color:white;
 
+cursor:pointer;
+
 }
 
-input{
+button:hover{
+
+background:#007acc;
+
+}
+
+input,
+textarea{
 
 width:100%;
 
 padding:15px;
 
 font-size:18px;
+
+margin-top:10px;
+
+border:1px solid #ddd;
+
+border-radius:10px;
+
+box-sizing:border-box;
+
+}
+
+.ai-panel{
+
+margin-top:30px;
+
+padding:20px;
+
+background:white;
+
+border-radius:16px;
+
+box-shadow:0 10px 30px rgba(0,0,0,0.06);
+
+text-align:left;
+
+}
+
+.ai-panel h2{
+
+margin-top:0;
+
+}
+
+.api-key-row{
+
+display:flex;
+
+gap:10px;
+
+align-items:center;
+
+}
+
+.api-key-row input{
+
+flex:1;
+
+}
+
+.ai-response{
+
+min-height:120px;
+
+padding:15px;
+
+margin-top:15px;
+
+background:#f8f9ff;
+
+border:1px solid #dde5ff;
+
+border-radius:10px;
+
+white-space:pre-line;
 
 }

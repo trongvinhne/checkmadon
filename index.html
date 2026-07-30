@@ -70,6 +70,22 @@
 
     </div>
 
+    <section class="ai-panel">
+        <h2>Trợ lý AI</h2>
+
+        <div class="api-key-row">
+            <input type="password" id="aiKey" placeholder="OpenAI API key (tùy chọn)" autocomplete="new-password">
+            <button id="saveApiKeyBtn">Lưu API Key</button>
+        </div>
+
+        <textarea id="aiPrompt" rows="3" placeholder="Nhập câu hỏi hoặc lệnh cho AI..."></textarea>
+        <button id="askAiBtn">Hỏi AI</button>
+
+        <div id="aiResponse" class="ai-response">
+            AI sẽ trả lời ở đây. Nhập câu hỏi và nhấn "Hỏi AI".
+        </div>
+    </section>
+
 </div>
 
 <script src="script.js"></script>
